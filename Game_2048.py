@@ -62,6 +62,7 @@ def merge(mat):
             if mat[i][j] == mat[i][j+1] and mat[i][j] != 0:
                 mat[i][j] = mat[i][j]*2
                 mat[i][j+1] = 0
+    return mat
 
 # step - 6 : Reverse and transpose a matrix
 def reverse(mat):
@@ -79,3 +80,37 @@ def transpose(mat):
         for j in range(4):
             new_mat[i].append(mat[j][i])
     return new_mat
+
+# step - 7 : Code for all possible moves
+def move_left(grid):
+    # Compress -> Merge -> Compress
+    new_grid = compress(grid)
+    new_grid = merge(new_grid)
+    new_grid = compress(new_grid)
+    return new_grid
+def move_right(grid):
+    # Reverse -> Compress -> Merge -> Compress -> Reverse
+    reverse_grid = reverse(grid)
+    new_grid = compress(reverse_grid)
+    new_grid = merge(new_grid)
+    new_grid = compress(new_grid)
+    final_grid = reverse(new_grid)
+    return final_grid
+def move_uo(grid):
+    # Transpose -> Compress -> Merge -> Compress -> Transpose
+    transpose_grid = transpose(grid)
+    new_grid = compress(transpose_grid)
+    new_grid = merge(new_grid)
+    new_grid = compress(new_grid)
+    final_grid = transpose(new_grid)
+    return final_grid
+def move_down(grid):
+    # Transpose -> Reverse -> Compress -> Merge -> Compress -> Reverse -> Transpose
+    transpose_grid = transpose(grid)
+    reverse_grid = reverse(transpose_grid)
+    new_grid = compress(reverse_grid)
+    new_grid = merge(new_grid)
+    new_grid = compress(new_grid)
+    final_reverse_grid = reverse(new_grid)
+    final_transpose_grid = transpose(final_reverse_grid)
+    return final_transpose_grid
