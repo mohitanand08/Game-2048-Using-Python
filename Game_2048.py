@@ -84,33 +84,37 @@ def transpose(mat):
 # step - 7 : Code for all possible moves
 def move_left(grid):
     # Compress -> Merge -> Compress
-    new_grid = compress(grid)
-    new_grid = merge(new_grid)
-    new_grid = compress(new_grid)
-    return new_grid
+    new_grid, changed1 = compress(grid)
+    new_grid, changed2 = merge(new_grid)
+    changed = changed1 or changed2
+    new_grid, temp = compress(new_grid)
+    return new_grid, changed
 def move_right(grid):
     # Reverse -> Compress -> Merge -> Compress -> Reverse
     reverse_grid = reverse(grid)
-    new_grid = compress(reverse_grid)
-    new_grid = merge(new_grid)
-    new_grid = compress(new_grid)
+    new_grid, changed1 = compress(reverse_grid)
+    new_grid, changed2 = merge(new_grid)
+    changed = changed1 or changed2
+    new_grid, temp = compress(new_grid)
     final_grid = reverse(new_grid)
-    return final_grid
-def move_uo(grid):
+    return final_grid, changed
+def move_up(grid):
     # Transpose -> Compress -> Merge -> Compress -> Transpose
     transpose_grid = transpose(grid)
-    new_grid = compress(transpose_grid)
-    new_grid = merge(new_grid)
-    new_grid = compress(new_grid)
+    new_grid, changed1 = compress(transpose_grid)
+    new_grid, changed2 = merge(new_grid)
+    changed = changed1 or changed2
+    new_grid, temp = compress(new_grid)
     final_grid = transpose(new_grid)
-    return final_grid
+    return final_grid, changed
 def move_down(grid):
     # Transpose -> Reverse -> Compress -> Merge -> Compress -> Reverse -> Transpose
     transpose_grid = transpose(grid)
     reverse_grid = reverse(transpose_grid)
-    new_grid = compress(reverse_grid)
-    new_grid = merge(new_grid)
-    new_grid = compress(new_grid)
+    new_grid, changed1 = compress(reverse_grid)
+    new_grid, changed2 = merge(new_grid)
+    new_grid, temp = compress(new_grid)
+    changed = changed1 or changed2
     final_reverse_grid = reverse(new_grid)
     final_transpose_grid = transpose(final_reverse_grid)
-    return final_transpose_grid
+    return final_transpose_grid, changed
