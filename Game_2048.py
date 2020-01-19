@@ -62,3 +62,20 @@ def merge(mat):
             if mat[i][j] == mat[i][j+1] and mat[i][j] != 0:
                 mat[i][j] = mat[i][j]*2
                 mat[i][j+1] = 0
+
+# step - 6 : Reverse and transpose a matrix
+def reverse(mat):
+    new_mat = []
+    for i in range(4):
+        new_mat.append([])
+        for j in range(4):
+            new_mat[i].append(mat[i][4-j-1])
+    return new_mat
+
+def transpose(mat):
+    new_mat = []
+    for i in range(4):
+        new_mat.append([])
+        for j in range(4):
+            new_mat[i].append(mat[j][i])
+    return new_mat
