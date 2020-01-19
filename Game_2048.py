@@ -44,6 +44,7 @@ def get_current_state(mat):
 
 # step - 4 : Compress Function
 def compress(mat):
+    changed = False
     new_mat = []
     for i in range(4):
         new_mat.append([0] * 4)
@@ -52,17 +53,21 @@ def compress(mat):
         for j in range(4):
             if mat[i][j] != 0:
                 new_mat[i][pos] = mat[i][j]
+                if j != pos:
+                    changed = True
                 pos += 1
-    return new_mat
+    return new_mat, changed
 
 # step - 5 : Merge
 def merge(mat):
+    changed = False
     for i in range(4):
         for j in range(3):
             if mat[i][j] == mat[i][j+1] and mat[i][j] != 0:
                 mat[i][j] = mat[i][j]*2
                 mat[i][j+1] = 0
-    return mat
+                changed = True
+    return mat, changed
 
 # step - 6 : Reverse and transpose a matrix
 def reverse(mat):
